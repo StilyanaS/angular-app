@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
   selector: 'app-items-list',
@@ -7,77 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsListComponent implements OnInit {
   public selectedItem: any
-  public items: any[] = [
-    {
-      img: './../../../assets/cerv1.png',
-      title: 'Cassels Milk Stou',
-      description: 'Cassels & Sons Brewing. Cerveza porter y stout',
-      price: '$75.000',
-      tag: 'rubia',
-      id:1
-    },
-    {
-      img: './../../../assets/cerv2.png',
-      title: 'Camba Pale Ale',
-      description: 'La Souche Franc-Bois d’hiver. Cerveza pale.',
-      price: '$85.300',
-      tag: 'morena',
-      id:2
-    },
-    {
-      img: './../../../assets/cerv3.png',
-      title: 'Votus Nº 001',
-      description: 'India Pale Ale del año 2019. Nº 001 Red IPA.',
-      price: '$75.000',
-      tag: 'roja',
-      id:3
-    },
-    {
-      img: './../../../assets/cerv4.png',
-      title: 'Prairie Artisian',
-      description: 'Ales Prairie Noir Whiskey Barrel Aged Imperial Stout 12oz',
-      price: '$85.300',
-      tag: 'rubia',
-      id:4
-    },
-    {
-      img: './../../../assets/cerv5.png',
-      title: 'Lost Abbey',
-      description: 'The Lost Abbey Citrus Sin American Wild Ale 750ml',
-      price: '$75.000',
-      tag: 'morena',
-      id:5
-    },
-    {
-      img: './../../../assets/cerv6.png',
-      title: 'Prairie',
-      description: 'Prairie Artisa Ales Paradise Imperial Stout 12oz',
-      price: '$85.300',
-      tag: 'roja',
-      id:6
-    },
-    {
-      img: './../../../assets/cerv7.png',
-      title: 'Redrice',
-      description: 'Hitachino Nest Beer Red Rice Ale 330ml',
-      price: '$85.300',
-      tag: 'rubia',
-      id:7
-    },
-    {
-      img: './../../../assets/cerv8.png',
-      title: 'Cascade',
-      description: 'Cascade Brewing 2017 Brunch Line BA NORTHWEST Sour Ale',
-      price: '$175.000',
-      tag: 'morena',
-      id:8
-    },
-  ]
-  constructor() { }
-
+  public items: any
+  public filterList: any[] = []
+  public filteredItems: any[] = []
+  constructor(private service: ItemsService) { }
+  public filtered: any
+  public shown: any
   ngOnInit(): void {
+    this.items = this.service.items;
+    this.filteredItems = this.service.items;
   }
   public selectItem(item: any) {
     this.selectedItem = item;
   }
+  public showFilters() {
+    this.shown == true ? this.shown = false : this.shown = true;
+    console.log(this.shown)
+  }
+  public filterArr() {
+    this.filterList = [];
+    this.filteredItems = [];
+    this.filtered = document.querySelectorAll(".checkbox input");
+    for (let i = 0; i < this.filtered.length; i++){
+      this.filtered[i].checked && this.filterList.push(this.filtered[i].name)
+    }
+    console.log(this.filterList)
+    this.items.forEach((item: any) => {
+      for (let j = 0; j < this.filterList.length; j++){
+          console.log(this.filterList[j])
+        if (this.filterList[j] == item['tag']) {
+          this.filteredItems.push(item);
+
+        }
+      }
+    })
+    if (this.filterList.length < 1) {
+      this.filteredItems = this.items;
+    }
+    console.log(this.filteredItems)
+  }
+  public uncheck() {
+    document.querySelectorAll(".checkbox input").forEach((check: any) => {
+      check.checked = false;
+    });
+  }
+
 }
