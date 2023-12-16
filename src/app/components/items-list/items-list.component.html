@@ -1,0 +1,15 @@
+<div class="container list">
+  <div class="row">
+    <div class="card" *ngFor="let item of items">
+      <img src="{{item.img}}" class="card-img-top" alt="cerveza1">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.description}}</p>
+        <p class="card-text-price">{{item.price}}</p>
+      </div>
+
+        <button href="#" class="btn btn-primary" (click)="selectItem(item)" [routerLink]="['/item-details', item.id]">Agregar</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="selectedItem">Item id: {{selectedItem.id}}</div>
