@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class ItemsListComponent implements OnInit {
   public items: any
   public filterList: any[] = []
   public filteredItems: any[] = []
+  public results: any
   constructor(private service: ItemsService) { }
   public filtered: any
   public shown: any

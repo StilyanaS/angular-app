@@ -1,0 +1,15 @@
+ <h1>Cervezas</h1>
+<div class="container list">
+  <div class="row">
+    <div class="card" *ngFor="let item of items">
+      <img src="{{item.thumbnail}}" class="card-img-top" alt="cerveza1">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.description}}</p>
+        <p class="card-text-price">{{item.price}} €</p>
+      </div>
+
+        <button href="#" class="btn" [routerLink]="['/item-details', item.id]">Agregar</button>
+    </div>
+  </div>
+</div>
